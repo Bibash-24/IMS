@@ -4,14 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses Management | IMS</title>
 
-    <title>Expense Management | IMS</title>
-
-    <link rel="stylesheet" href="expenses.css">
+    <link rel="stylesheet" href="./expenses.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -30,46 +29,56 @@
 
             <p class="menu-label">MAIN MENU</p>
 
-            <a href="dashboard.html" class="menu-item">
+            <a href="./dashboard.html" class="menu-item">
                 <span>▦</span> Dashboard
             </a>
 
-            <a href="products.html" class="menu-item">
-                <span>📦</span> Products
+            <a href="./sales.html" class="menu-item">
+                <span>💵</span> Sales
             </a>
 
-            <a href="supplier.html" class="menu-item">
-                <span>🚚</span> Suppliers
+            <a href="./purchase.html" class="menu-item">
+                <span>🛒</span> Purchase
             </a>
 
-            <a href="purchase.html" class="menu-item">
-                <span>🛒</span> Purchases
+            <a href="./inventory.html" class="menu-item">
+                <span>📦</span> Manage Inventory
             </a>
 
-            <a href="sales.html" class="menu-item">
-                <span>💰</span> Sales
+            <a href="./add_product.html" class="menu-item">
+                <span>➕</span> Add Product
+            </a>
+
+            <a href="./suppliers.html" class="menu-item">
+                <span>🚚</span> Supplier Management
             </a>
 
             <p class="menu-label">MANAGEMENT</p>
 
-            <a href="expenses.html" class="menu-item active">
-                <span>💳</span> Expenses
+            <a href="./reports.html" class="menu-item">
+                <span>📊</span> Reports
             </a>
 
-            <a href="reports.html" class="menu-item">
-                <span>📊</span> Reports
+            <a href="./expenses.html" class="menu-item active">
+                <span>🧾</span> Expenses Management
+            </a>
+
+            <a href="./credit.html" class="menu-item">
+                <span>💳</span> Credits & Payments
             </a>
 
         </nav>
 
         <div class="sidebar-bottom">
-            <a href="profile.html" class="menu-item">
+
+            <a href="./manage-profile.html" class="menu-item">
                 <span>👤</span> Profile
             </a>
 
-            <button class="logout-btn" id="logoutBtn">
+            <button type="button" class="logout-btn" id="logoutBtn">
                 <span>↪</span> Logout
             </button>
+
         </div>
 
     </aside>
@@ -78,11 +87,10 @@
     <!-- MAIN CONTENT -->
     <main class="main-content">
 
-        <!-- HEADER -->
         <header class="top-header">
 
             <div>
-                <h1>Expense Management</h1>
+                <h1>Expenses Management</h1>
                 <p>Track and manage your business expenses</p>
             </div>
 
@@ -136,7 +144,7 @@
         </section>
 
 
-        <!-- ADD EXPENSE SECTION -->
+        <!-- ADD EXPENSE -->
         <section class="content-card">
 
             <div class="section-header">
@@ -193,11 +201,7 @@
 
                     <div class="form-group">
                         <label for="expenseDate">Expense Date *</label>
-                        <input
-                            type="date"
-                            id="expenseDate"
-                            required
-                        >
+                        <input type="date" id="expenseDate" required>
                     </div>
 
                     <div class="form-group">
@@ -233,6 +237,7 @@
                 </div>
 
                 <div class="form-actions">
+
                     <button type="reset" class="reset-btn" id="resetBtn">
                         Clear Form
                     </button>
@@ -240,6 +245,7 @@
                     <button type="submit" class="submit-btn" id="submitBtn">
                         + Add Expense
                     </button>
+
                 </div>
 
             </form>
@@ -256,7 +262,7 @@
                     <p>View and manage all recorded expenses</p>
                 </div>
 
-                <button class="export-btn" id="exportBtn">
+                <button type="button" class="export-btn" id="exportBtn">
                     ↓ Export CSV
                 </button>
             </div>
@@ -288,7 +294,7 @@
                 <input type="date" id="filterStartDate">
                 <input type="date" id="filterEndDate">
 
-                <button id="clearFilters" class="clear-filter-btn">
+                <button type="button" id="clearFilters" class="clear-filter-btn">
                     Clear Filters
                 </button>
 
@@ -313,13 +319,11 @@
                     </thead>
 
                     <tbody id="expenseTableBody">
-
                         <tr>
                             <td colspan="7" class="empty-state">
                                 No expenses recorded yet.
                             </td>
                         </tr>
-
                     </tbody>
 
                 </table>
@@ -333,7 +337,6 @@
         </section>
 
 
-        <!-- FOOTER -->
         <footer class="page-footer">
             <p>© 2026 Inventory Management System. All Rights Reserved.</p>
         </footer>
@@ -342,9 +345,7 @@
 
 </div>
 
-
-<!-- JAVASCRIPT -->
-<script src="expenses.js"></script>
+<script src="./expenses.js"></script>
 
 </body>
 </html>
