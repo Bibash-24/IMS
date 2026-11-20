@@ -13,7 +13,6 @@
 body {
     min-height: 100vh;
     color: white;
-
     background: linear-gradient(
         135deg,
         #667eea,
@@ -21,7 +20,6 @@ body {
         #42a5f5,
         #7b1fa2
     );
-
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
 }
@@ -33,9 +31,7 @@ body {
 header {
     background: rgba(0,0,0,0.2);
     backdrop-filter: blur(8px);
-
     padding: 20px 50px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,16 +45,12 @@ header h2 {
 .logout-btn {
     background: #ff5252;
     color: white;
-
     padding: 12px 22px;
-
     border: none;
     border-radius: 10px;
-
     cursor: pointer;
     font-size: 15px;
     font-weight: 600;
-
     transition: 0.3s;
 }
 
@@ -74,26 +66,24 @@ header h2 {
 .low-stock-bar {
     width: 95%;
     max-width: 900px;
-
     margin: 25px auto 0;
     padding: 18px 25px;
-
     border-radius: 12px;
-
     display: flex;
     align-items: center;
     gap: 15px;
-
     font-weight: 600;
     cursor: pointer;
-
     transition: 0.3s;
+}
+
+.low-stock-bar:hover {
+    transform: translateY(-3px);
 }
 
 .low {
     background: rgba(255,0,0,0.2);
     border-left: 6px solid red;
-
     animation: pulse 1.5s infinite;
 }
 
@@ -110,132 +100,111 @@ header h2 {
     font-size: 1rem;
 }
 
-//* =====================================
+/* ==================================
    DASHBOARD STATISTICS
-===================================== */
+================================== */
 
-.dashboard-stats {
-    width: 92%;
-    max-width: 1400px;
-    margin: 35px auto;
+.stats-container {
+    width: 95%;
+    max-width: 1250px;
+    margin: 35px auto 0;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 22px;
+    gap: 20px;
 }
 
-.dashboard-stats .stat-card {
+/* Individual statistic panel */
+
+.stats-container .stat-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 155px;
+    padding: 24px 18px;
+    border-radius: 17px;
     background: #ffffff;
-    min-height: 145px;
-    padding: 25px 22px;
-    border-radius: 16px;
+    color: #263248;
     display: flex;
     align-items: center;
-    gap: 18px;
-    border: 1px solid #e8eaf0;
-    border-left: 5px solid #667eea;
-    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+    gap: 16px;
+    text-align: left;
+    border: none;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.16);
     transition: 0.3s ease;
 }
 
-.dashboard-stats .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+.stats-container .stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.23);
 }
 
-.stat-icon {
+/* Icon backgrounds */
+
+.stats-container .stat-card > span {
     width: 58px;
     height: 58px;
     min-width: 58px;
-    border-radius: 14px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 27px;
+    font-size: 29px;
+    animation: none;
 }
 
-.stat-info {
-    min-width: 0;
-}
+/* Statistic information */
 
-.stat-info h3 {
-    font-size: 14px;
-    color: #687386;
+.stats-container .stat-card h3 {
+    color: #788398;
+    font-size: 13px;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin: 0 0 10px;
 }
 
-.stat-info p {
-    font-size: 27px;
+.stats-container .stat-card p {
+    font-size: 25px;
     font-weight: 700;
-    color: #202b3c;
-    margin-bottom: 6px;
+    color: #202c40;
     overflow-wrap: anywhere;
 }
 
-.stat-info span {
-    font-size: 11px;
-    color: #929aaa;
+/* Products */
+
+.stats-container .stat-card:nth-child(1) {
+    border-bottom: 4px solid #667eea;
 }
 
-/* PRODUCTS */
-
-.products-stat {
-    border-left-color: #667eea !important;
-}
-
-.products-stat .stat-icon {
+.stats-container .stat-card:nth-child(1) > span {
     background: #eef0ff;
 }
 
-/* SALES */
+/* Sales */
 
-.sales-stat {
-    border-left-color: #16a085 !important;
+.stats-container .stat-card:nth-child(2) {
+    border-bottom: 4px solid #16a085;
 }
 
-.sales-stat .stat-icon {
-    background: #e5f8f2;
+.stats-container .stat-card:nth-child(2) > span {
+    background: #e4f8f1;
 }
 
-/* PURCHASES */
+/* Purchases */
 
-.purchases-stat {
-    border-left-color: #f39c12 !important;
+.stats-container .stat-card:nth-child(3) {
+    border-bottom: 4px solid #f39c12;
 }
 
-.purchases-stat .stat-icon {
-    background: #fff4df;
+.stats-container .stat-card:nth-child(3) > span {
+    background: #fff3df;
 }
 
-/* LOW STOCK */
+/* Low stock */
 
-.low-stock-stat {
-    border-left-color: #e74c3c !important;
+.stats-container .stat-card:nth-child(4) {
+    border-bottom: 4px solid #e74c3c;
 }
 
-.low-stock-stat .stat-icon {
+.stats-container .stat-card:nth-child(4) > span {
     background: #ffebeb;
-}
-
-/* RESPONSIVE */
-
-@media (max-width: 1000px) {
-    .dashboard-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 550px) {
-    .dashboard-stats {
-        grid-template-columns: 1fr;
-        width: 90%;
-        gap: 15px;
-    }
-
-    .dashboard-stats .stat-card {
-        min-height: 120px;
-        padding: 20px;
-    }
 }
 
 /* ==================================
@@ -245,31 +214,22 @@ header h2 {
 .container {
     width: 95%;
     max-width: 900px;
-
     margin: 35px auto;
-
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-
     gap: 25px;
 }
 
 .card {
     background: rgba(255,255,255,0.15);
-
     backdrop-filter: blur(12px);
-
     border-radius: 20px;
     padding: 30px 15px;
-
     text-align: center;
     text-decoration: none;
     color: white;
-
     box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-
     transition: 0.4s;
-
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -280,7 +240,6 @@ header h2 {
 .card span {
     font-size: 45px;
     display: block;
-
     animation: floatIcon 3s ease-in-out infinite;
 }
 
@@ -313,11 +272,9 @@ footer {
     0% {
         transform: translateY(0);
     }
-
     50% {
         transform: translateY(-10px);
     }
-
     100% {
         transform: translateY(0);
     }
@@ -327,11 +284,9 @@ footer {
     0% {
         background-position: 0% 50%;
     }
-
     50% {
         background-position: 100% 50%;
     }
-
     100% {
         background-position: 0% 50%;
     }
@@ -341,11 +296,9 @@ footer {
     0% {
         transform: scale(1);
     }
-
     50% {
         transform: scale(1.02);
     }
-
     100% {
         transform: scale(1);
     }
@@ -355,15 +308,13 @@ footer {
    RESPONSIVE DESIGN
 ================================== */
 
-@media(max-width: 850px) {
-
+@media(max-width: 1000px) {
     .stats-container {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media(max-width: 600px) {
-
     header {
         padding: 18px 15px;
     }
@@ -375,6 +326,20 @@ footer {
     .logout-btn {
         padding: 10px 13px;
         font-size: 12px;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .stats-container .stat-card {
+        min-height: 120px;
+        padding: 20px;
+    }
+
+    .stats-container .stat-card p {
+        font-size: 23px;
     }
 
     .container {
@@ -391,13 +356,5 @@ footer {
 
     .card p {
         font-size: 14px;
-    }
-
-    .stat-card h3 {
-        font-size: 13px;
-    }
-
-    .stat-card p {
-        font-size: 18px;
     }
 }
