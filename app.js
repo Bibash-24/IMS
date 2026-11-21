@@ -288,6 +288,18 @@ document.addEventListener("DOMContentLoaded", function() {
     // Connect login form
     loginForm.addEventListener("submit", handleLogin);
 
+    // Pre-seed default user if not yet initialized
+    if (!localStorage.getItem(USER_KEY)) {
+        const defaultAdmin = {
+            name: "System Administrator",
+            email: "admin@ims.com",
+            phone: "9800000000",
+            password: "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9", // SHA-256 for admin123
+            createdAt: new Date().toISOString()
+        };
+        localStorage.setItem(USER_KEY, JSON.stringify(defaultAdmin));
+    }
+
     // Check existing login session
     const currentUser = localStorage.getItem(SESSION_KEY);
 

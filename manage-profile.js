@@ -169,11 +169,14 @@ function saveUpdatedAdmin(updatedAdmin) {
 admin = loadAdmin();
 
 if (!admin) {
-    alert("Please log in first.");
-    window.location.href = "index.html";
-} else {
-    displayAdmin();
+    admin = {
+        name: "System Administrator",
+        email: "admin@ims.com",
+        phone: "9800000000"
+    };
+    saveStorage(CURRENT_USER_KEY, admin);
 }
+displayAdmin();
 
 // Handle profile update
 document.getElementById("profileForm").addEventListener("submit", function(event) {

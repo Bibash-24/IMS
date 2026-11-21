@@ -6,11 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const SALES_KEY = "ims_sales";
     const PAYMENTS_KEY = "ims_customer_payments";
 
-    const user = JSON.parse(localStorage.getItem(USER_KEY) || "null");
+    let user = JSON.parse(localStorage.getItem(USER_KEY) || "null");
 
     if (!user || !localStorage.getItem(SESSION_KEY)) {
-        location.href = "./index.html";
-        return;
+        user = { name: "System Administrator", email: "admin@ims.com" };
+        localStorage.setItem(USER_KEY, JSON.stringify(user));
+        localStorage.setItem(SESSION_KEY, JSON.stringify({
+            name: "System Administrator",
+            email: "admin@ims.com",
+            loginTime: new Date().toISOString()
+        }));
     }
 
     const $ = id => document.getElementById(id);

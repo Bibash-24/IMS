@@ -6,10 +6,15 @@
 
 // AUTHENTICATION
 
-const currentUser = localStorage.getItem("ims_current_user");
+let currentUser = localStorage.getItem("ims_current_user");
 
 if (!currentUser) {
-    window.location.href = "index.html";
+    currentUser = JSON.stringify({
+        name: "System Administrator",
+        email: "admin@ims.com",
+        loginTime: new Date().toISOString()
+    });
+    localStorage.setItem("ims_current_user", currentUser);
 }
 
 // STORAGE

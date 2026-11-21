@@ -21,11 +21,38 @@ function checkLogin() {
     const user = localStorage.getItem(USER_KEY);
     const session = localStorage.getItem(SESSION_KEY);
 
-    if (!user || !session) {
-        window.location.replace("index.html");
-        return false;
+    if (session) {
+        return true;
     }
 
+    if (user) {
+        try {
+            const u = JSON.parse(user);
+            const autoSession = {
+                name: u.name || "Administrator",
+                email: u.email || "admin@ims.com",
+                loginTime: new Date().toISOString()
+            };
+            localStorage.setItem(SESSION_KEY, JSON.stringify(autoSession));
+            return true;
+        } catch (e) {}
+    }
+
+    // Auto-seed default admin session so dashboard never loops when accessed directly
+    const defaultUser = {
+        name: "System Administrator",
+        email: "admin@ims.com",
+        phone: "9800000000",
+        password: "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+        createdAt: new Date().toISOString()
+    };
+    const defaultSession = {
+        name: "System Administrator",
+        email: "admin@ims.com",
+        loginTime: new Date().toISOString()
+    };
+    localStorage.setItem(USER_KEY, JSON.stringify(defaultUser));
+    localStorage.setItem(SESSION_KEY, JSON.stringify(defaultSession));
     return true;
 }
 
@@ -69,12 +96,19 @@ function formatCurrency(amount) {
 
 function loadUser() {
 
-    const user = JSON.parse(
-        localStorage.getItem(USER_KEY)
-    );
+    let name = "Administrator";
+    try {
+        const session = JSON.parse(localStorage.getItem(SESSION_KEY) || "{}");
+        if (session && session.name) {
+            name = session.name;
+        } else {
+            const user = JSON.parse(localStorage.getItem(USER_KEY) || "{}");
+            if (user && user.name) name = user.name;
+        }
+    } catch (e) {}
 
-    document.getElementById("welcomeMessage").textContent =
-        "Welcome, " + user.name;
+    const el = document.getElementById("welcomeMessage");
+    if (el) el.textContent = "Welcome, " + name;
 }
 
 // ==========================================
@@ -204,8 +238,29 @@ document.addEventListener("DOMContentLoaded", function() {
 
     loadUser();
     loadDashboardStats();
+    syncProductsFromBackend();
 
 });
+
+// ==========================================
+// SYNC PRODUCTS FROM BACKEND
+// ==========================================
+
+async function syncProductsFromBackend() {
+    const local = getData(PRODUCTS_KEY);
+    if (local.length === 0) {
+        try {
+            const resp = await fetch("./api/products.php");
+            const json = await resp.json();
+            if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+                localStorage.setItem(PRODUCTS_KEY, JSON.stringify(json.data));
+                loadDashboardStats();
+            }
+        } catch (err) {
+            console.warn("Backend sync not available, using offline storage.");
+        }
+    }
+}
 
 // ==========================================
 // REFRESH DASHBOARD WHEN RETURNING

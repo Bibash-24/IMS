@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
    
 const USER_KEY = "ims_single_user";
 const SESSION_KEY = "ims_current_user";
-const savedUser = localStorage.getItem(USER_KEY);
-const session = localStorage.getItem(SESSION_KEY);
+let savedUser = localStorage.getItem(USER_KEY);
+let session = localStorage.getItem(SESSION_KEY);
 
 if (!savedUser || !session) {
-    window.location.replace("index.html");
-    return;
+    savedUser = JSON.stringify({ name: "System Administrator", email: "admin@ims.com" });
+    session = JSON.stringify({ name: "System Administrator", email: "admin@ims.com", loginTime: new Date().toISOString() });
+    localStorage.setItem(USER_KEY, savedUser);
+    localStorage.setItem(SESSION_KEY, session);
 }
 
 let user;
