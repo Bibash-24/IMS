@@ -1,11 +1,10 @@
 <?php 
 session_start();
-$conn = new mysqli("localhost","root","1234","ims");
-if($conn->connect_error) die("DB Connection Error");
-
-$msg = "";
-$conn = new mysqli("localhost","root","1234","ims");
-if($conn->connect_error) die("DB Connection Error");
+$conn = @new mysqli("localhost","root","","ims");
+if($conn->connect_error) {
+    $conn = @new mysqli("localhost","root","1234","ims");
+}
+if($conn->connect_error) die("DB Connection Error: " . $conn->connect_error);
 
 $id = $_GET['id'];
 

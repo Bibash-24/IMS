@@ -235,7 +235,7 @@ CREATE TABLE `purchases` (
   `payment_status` varchar(50) DEFAULT NULL,
   `paid_amount` decimal(10,2) DEFAULT '0.00',
   `due_amount` decimal(10,2) DEFAULT '0.00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `purchases`
@@ -281,7 +281,7 @@ CREATE TABLE `sales` (
   `customer_name` varchar(100) NOT NULL DEFAULT '',
   `customer_contact` varchar(50) NOT NULL DEFAULT '',
   `product_image` varchar(255) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sales`
@@ -340,7 +340,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `phone`, `created_at`) V
 (11, 'rabin tamang', 'rabin@gmail.com', '$2y$10$5svQYmuBekkCAdoT8rEEsejilWTPdDkCTI8SKaE7zbV8/TjD.2BCC', '9865351554', '2026-02-21 15:23:35'),
 (12, 'a', 'a@gmail.com', '$2y$10$qbu8lVfx/Dv6jW2jnZMaNe6JJ6jBXl9keeqfhORrJsuKoZyjoRzha', '9836546224', '2026-02-23 03:27:16'),
 (13, 'Demo', 'demo1@gmail.com', '$2y$10$MmbY.aQuPEu9d5KeHtI.n.QxbnNjaQemMmACC8PNkGIFt8E/geE8S', '9852653445', '2026-04-12 02:56:00'),
-(14, 'ram magar', 'Ram@gmail.com', '$2y$10$pqPnVWZbs2bsTC2qn4ykle5aC26E62US4nsZ655yGkBrm3ghNigg2', '98653214665', '2026-04-29 03:59:02');
+(14, 'ram magar', 'Ram@gmail.com', '$2y$10$pqPnVWZbs2bsTC2qn4ykle5aC26E62US4nsZ655yGkBrm3ghNigg2', '98653214665', '2026-04-29 03:59:02'),
+(15, 'System Administrator', 'admin@ims.com', '$2y$10$tVhkvGeLqLyofp3NHEW8WOYvEPm2XxMVdv307qBzHaMiwXVQkgb0m', '9800000000', '2026-11-22 00:00:00'),
+(16, 'Store Staff', 'staff@ims.com', '$2y$10$KLD.R5VEmSioAKsX1/AJlO9vJWJVyc82sVndF0tgFDKo6t1bErG.u', '9811111111', '2026-11-22 00:00:00');
 
 --
 -- Indexes for dumped tables
