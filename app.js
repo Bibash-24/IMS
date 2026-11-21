@@ -16,6 +16,12 @@ function openModal(id) {
 
     if (modal) {
         modal.style.display = "flex";
+        if (id === "login") {
+            const emailInput = document.getElementById("loginEmail");
+            const passInput = document.getElementById("loginPassword");
+            if (emailInput && !emailInput.value) emailInput.value = "admin@ims.com";
+            if (passInput && !passInput.value) passInput.value = "admin123";
+        }
     }
 }
 
@@ -178,6 +184,25 @@ async function handleSignup(event) {
 }
 
 // =====================================
+// DEFAULT SYSTEM ACCOUNTS
+// =====================================
+
+const DEFAULT_ACCOUNTS = {
+    "admin@ims.com": {
+        name: "System Administrator",
+        passwordPlain: "admin123",
+        passwordHash: "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+        role: "admin"
+    },
+    "staff@ims.com": {
+        name: "Store Staff",
+        passwordPlain: "staff123",
+        passwordHash: "8528bb23ce2ebdd5a5eaec8c9da0fd06c126d4052ca5f653556093406206cbfd",
+        role: "staff"
+    }
+};
+
+// =====================================
 // LOGIN FUNCTION
 // =====================================
 
@@ -197,72 +222,96 @@ async function handleLogin(event) {
     error.textContent = "";
     success.textContent = "";
 
-    let user;
-
-    try {
-
-        const savedUser = localStorage.getItem(USER_KEY);
-
-        if (!savedUser) {
-            error.textContent =
-                "No account found! Please sign up first.";
-            return;
-        }
-
-        user = JSON.parse(savedUser);
-
-        if (!user || !user.email || !user.password) {
-            throw new Error("Saved account data is invalid.");
-        }
-
-    } catch (err) {
-
-        error.textContent = err.message;
-        return;
-
-    }
-
-    if (email !== user.email) {
-        error.textContent = "Incorrect email address!";
+    if (!email || !password) {
+        error.textContent = "Please enter both email and password.";
         return;
     }
 
-    try {
+    // 1. Check built-in system accounts
+    if (DEFAULT_ACCOUNTS[email]) {
+        const acc = DEFAULT_ACCOUNTS[email];
+        let match = (password === acc.passwordPlain);
 
-        const hashedPassword = await hashPassword(password);
-
-        if (hashedPassword !== user.password) {
-            error.textContent = "Incorrect password!";
-            return;
+        if (!match) {
+            try {
+                const hashed = await hashPassword(password);
+                if (hashed === acc.passwordHash) match = true;
+            } catch (e) {}
         }
 
-        // Save login session
-        const session = {
-            name: user.name,
-            email: user.email,
-            loginTime: new Date().toISOString()
-        };
+        if (match) {
+            const session = {
+                name: acc.name,
+                email: email,
+                role: acc.role,
+                loginTime: new Date().toISOString()
+            };
+            const user = {
+                name: acc.name,
+                email: email,
+                phone: "9800000000",
+                password: acc.passwordHash,
+                createdAt: new Date().toISOString()
+            };
 
-        localStorage.setItem(
-            SESSION_KEY,
-            JSON.stringify(session)
-        );
+            localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+            if (!localStorage.getItem(USER_KEY)) {
+                localStorage.setItem(USER_KEY, JSON.stringify(user));
+            }
 
-        success.textContent =
-            "Login successful! Redirecting...";
+            success.textContent = "Login successful! Redirecting to dashboard...";
+            document.getElementById("loginForm").reset();
 
-        document.getElementById("loginForm").reset();
-
-        setTimeout(function() {
-            window.location.replace("./dashboard.html");
-        }, 500);
-
-    } catch (err) {
-
-        error.textContent = err.message;
-        console.error("Login error:", err);
-
+            setTimeout(function() {
+                window.location.replace("./dashboard.html");
+            }, 300);
+            return;
+        } else {
+            error.textContent = "Incorrect password for " + email;
+            return;
+        }
     }
+
+    // 2. Check user saved in localStorage
+    const savedUser = localStorage.getItem(USER_KEY);
+    if (savedUser) {
+        try {
+            const user = JSON.parse(savedUser);
+            if (user && user.email && user.email.toLowerCase() === email) {
+                let match = false;
+                try {
+                    const hashed = await hashPassword(password);
+                    match = (hashed === user.password || password === user.password);
+                } catch (e) {
+                    match = (password === user.password);
+                }
+
+                if (match) {
+                    const session = {
+                        name: user.name || "User",
+                        email: user.email,
+                        loginTime: new Date().toISOString()
+                    };
+                    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+                    success.textContent = "Login successful! Redirecting...";
+                    document.getElementById("loginForm").reset();
+
+                    setTimeout(function() {
+                        window.location.replace("./dashboard.html");
+                    }, 300);
+                    return;
+                } else {
+                    error.textContent = "Incorrect password!";
+                    return;
+                }
+            }
+        } catch (err) {
+            console.error("Parse user error:", err);
+        }
+    }
+
+    // 3. Fallback: prompt user
+    error.textContent = "No account found for this email. Use admin@ims.com or click Sign Up.";
 }
 
 // =====================================

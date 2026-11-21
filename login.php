@@ -33,7 +33,7 @@ if(isset($_POST['signup'])){
                 $_SESSION['user_name'] = $name;
                 $_SESSION['role'] = 'admin';
 
-                header("Location: admin_dashboard.php");
+                header("Location: dashboard.html");
                 exit;
             } else {
                 $_SESSION['error'] = "Signup failed!";
@@ -61,7 +61,7 @@ if(isset($_POST['login'])){
             $_SESSION['user_name'] = $name;
             $_SESSION['role'] = $role;
 
-            header("Location: admin_dashboard.php");
+            header("Location: dashboard.html");
             exit;
         } else {
             $_SESSION['error'] = "Wrong password!";
