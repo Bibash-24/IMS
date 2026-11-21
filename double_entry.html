@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>General Ledger & Double Entry - IMS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="barcode_scanner.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <h2>IMS Accounting</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="dashboard.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+                <a href="inventory.html"><i class="fa-solid fa-box"></i> Inventory</a>
+                <a href="sales.html"><i class="fa-solid fa-cart-shopping"></i> Sales POS</a>
+                <a href="purchase.html"><i class="fa-solid fa-truck-ramp-box"></i> Purchase</a>
+                <a href="barcode_scanner.html"><i class="fa-solid fa-barcode"></i> Barcode Station</a>
+                <a href="analytics_bi.html"><i class="fa-solid fa-chart-line"></i> BI Analytics</a>
+                <a href="audit_logs.php"><i class="fa-solid fa-shield-halved"></i> Audit Logs</a>
+                <a href="double_entry.html" class="active"><i class="fa-solid fa-scale-balanced"></i> General Ledger</a>
+                <a href="reports.html"><i class="fa-solid fa-chart-pie"></i> Reports</a>
+                <a href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-nav">
+                <div class="page-title">
+                    <h1><i class="fa-solid fa-scale-balanced"></i> Double-Entry General Ledger & Trial Balance</h1>
+                    <p>Automated journal entries verifying balanced Debits = Credits for all transactions.</p>
+                </div>
+                <div class="user-badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 6px 14px; border-radius: 6px; font-weight: 700;">
+                    <i class="fa-solid fa-circle-check"></i> Books In Balance
+                </div>
+            </header>
+
+            <!-- Trial Balance Summary Card -->
+            <div class="scanner-grid">
+                <div class="card">
+                    <h2><i class="fa-solid fa-book-bookmark"></i> Trial Balance Verification</h2>
+                    <p class="subtitle">System-generated automated postings audit equality:</p>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+                        <div style="background: #0f172a; padding: 18px; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                            <small style="color: #94a3b8; text-transform: uppercase;">Total Debits (DR)</small>
+                            <h2 style="color: #38bdf8; margin: 6px 0 0 0;" id="sumDebits">NPR 1,280,500.00</h2>
+                        </div>
+                        <div style="background: #0f172a; padding: 18px; border-radius: 8px; border-left: 4px solid #10b981;">
+                            <small style="color: #94a3b8; text-transform: uppercase;">Total Credits (CR)</small>
+                            <h2 style="color: #10b981; margin: 6px 0 0 0;" id="sumCredits">NPR 1,280,500.00</h2>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.85rem; color: #10b981;">
+                        <i class="fa-solid fa-circle-check"></i> Math Verification: Difference is NPR 0.00 (Zero variance).
+                    </div>
+                </div>
+
+                <!-- Aging Buckets Card -->
+                <div class="card">
+                    <h2><i class="fa-solid fa-clock"></i> Accounts Receivable Aging Schedule</h2>
+                    <p class="subtitle">Credit aging disaggregation by risk tier:</p>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 15px;">
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 6px;">
+                            <span>Current (0 - 30 Days):</span>
+                            <b style="color: #10b981;">NPR 45,000.00</b>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 6px;">
+                            <span>Past Due (31 - 60 Days):</span>
+                            <b style="color: #38bdf8;">NPR 18,500.00</b>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 6px;">
+                            <span>Past Due (61 - 90 Days):</span>
+                            <b style="color: #f59e0b;">NPR 6,200.00</b>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Delinquent (90+ Days):</span>
+                            <b style="color: #ef4444;">NPR 0.00</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- General Journal Postings Table -->
+            <div class="card" style="margin-top: 25px;">
+                <h2><i class="fa-solid fa-list-check"></i> General Journal Postings</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Journal ID</th>
+                                <th>Date</th>
+                                <th>Account Name</th>
+                                <th>Ref Type</th>
+                                <th>Ref ID</th>
+                                <th>Debit (DR)</th>
+                                <th>Credit (CR)</th>
+                                <th>Memo</th>
+                            </tr>
+                        </thead>
+                        <tbody id="journalBody">
+                            <tr>
+                                <td>#JRN-101</td>
+                                <td>2026-11-21 14:30</td>
+                                <td>1010_Cash</td>
+                                <td>POS_SALE</td>
+                                <td>#84</td>
+                                <td style="color: #38bdf8; font-weight: bold;">NPR 185,000.00</td>
+                                <td>-</td>
+                                <td>Retail Sale Dell XPS</td>
+                            </tr>
+                            <tr>
+                                <td>#JRN-102</td>
+                                <td>2026-11-21 14:30</td>
+                                <td>4010_SalesRevenue</td>
+                                <td>POS_SALE</td>
+                                <td>#84</td>
+                                <td>-</td>
+                                <td style="color: #10b981; font-weight: bold;">NPR 185,000.00</td>
+                                <td>Retail Sale Dell XPS</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

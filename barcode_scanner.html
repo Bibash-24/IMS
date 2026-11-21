@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode & QR Station - IMS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="barcode_scanner.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-boxes-stacked"></i>
+                <h2>IMS Retail</h2>
+            </div>
+            <nav class="nav-links">
+                <a href="dashboard.html"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+                <a href="inventory.html"><i class="fa-solid fa-box"></i> Inventory</a>
+                <a href="sales.html"><i class="fa-solid fa-cart-shopping"></i> Sales POS</a>
+                <a href="purchase.html"><i class="fa-solid fa-truck-ramp-box"></i> Purchase</a>
+                <a href="barcode_scanner.html" class="active"><i class="fa-solid fa-barcode"></i> Barcode Station</a>
+                <a href="analytics_bi.html"><i class="fa-solid fa-chart-line"></i> BI Analytics</a>
+                <a href="audit_logs.php"><i class="fa-solid fa-shield-halved"></i> Audit Logs</a>
+                <a href="double_entry.html"><i class="fa-solid fa-scale-balanced"></i> General Ledger</a>
+                <a href="reports.html"><i class="fa-solid fa-chart-pie"></i> Reports</a>
+                <a href="logout.php"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-nav">
+                <div class="page-title">
+                    <h1><i class="fa-solid fa-barcode"></i> Barcode & QR Code Label Station</h1>
+                    <p>Scan incoming stock, lookup SKUs, and generate printable thermal barcode labels.</p>
+                </div>
+                <div class="user-badge">
+                    <span class="status-indicator"></span> Scanner Ready
+                </div>
+            </header>
+
+            <div class="scanner-grid">
+                <!-- Barcode Scanner Input Panel -->
+                <div class="card scanner-input-card">
+                    <h2><i class="fa-solid fa-qrcode"></i> Quick SKU / Barcode Lookup</h2>
+                    <p class="subtitle">Scan with a handheld laser reader or enter SKU code manually:</p>
+                    
+                    <form id="scannerForm" onsubmit="event.preventDefault(); handleBarcodeScan();">
+                        <div class="input-row">
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-barcode input-icon"></i>
+                                <input type="text" id="barcodeInput" placeholder="Scan barcode or type SKU (e.g. SKU-DELL-15)..." autofocus autocomplete="off">
+                            </div>
+                            <button type="submit" class="btn-primary"><i class="fa-solid fa-search"></i> Lookup</button>
+                        </div>
+                    </form>
+
+                    <div id="scanResult" class="scan-result-box" style="display: none;">
+                        <!-- Rendered dynamically -->
+                    </div>
+
+                    <div class="quick-presets">
+                        <span>Quick Test Presets:</span>
+                        <button type="button" class="btn-chip" onclick="simulateScan('SKU-DELL-15')">SKU-DELL-15</button>
+                        <button type="button" class="btn-chip" onclick="simulateScan('SKU-LOGI-MX3')">SKU-LOGI-MX3</button>
+                        <button type="button" class="btn-chip" onclick="simulateScan('SKU-SAM-4K32')">SKU-SAM-4K32</button>
+                    </div>
+                </div>
+
+                <!-- Label Printing Preview Panel -->
+                <div class="card label-preview-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-print"></i> Thermal Label Generator</h2>
+                        <button type="button" class="btn-secondary" onclick="window.print()"><i class="fa-solid fa-print"></i> Print Labels</button>
+                    </div>
+                    <div id="printableLabelContainer" class="printable-label-wrapper">
+                        <div class="thermal-label">
+                            <div class="label-company">WHEELSONDEMAND IMS</div>
+                            <div class="label-name" id="labelProductName">Dell XPS 15 Laptop</div>
+                            <div class="label-sku" id="labelProductSku">SKU-DELL-15</div>
+                            <div class="label-barcode-svg" id="labelBarcodeSvg">
+                                <!-- Barcode SVG rendered by JS -->
+                            </div>
+                            <div class="label-footer">
+                                <span class="label-price" id="labelProductPrice">NPR 185,000.00</span>
+                                <span class="label-vat">VAT INCLUDED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Scans History Table -->
+            <div class="card history-card">
+                <h2><i class="fa-solid fa-clock-rotate-left"></i> Session Scan Activity Log</h2>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Timestamp</th>
+                                <th>Scanned Code</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Current Stock</th>
+                                <th>Selling Price</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="scanHistoryBody">
+                            <tr>
+                                <td colspan="7" class="text-center">No barcode scans recorded in this session.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="barcode_scanner.js"></script>
+</body>
+</html>
