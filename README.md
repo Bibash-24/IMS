@@ -1,195 +1,147 @@
 # 📦 Enterprise Inventory Management System (IMS)
 
-<p align="center">
-  <img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.2+">
-  <img src="https://img.shields.io/badge/JavaScript-ES6%2B%20Vanilla-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript ES6+">
-  <img src="https://img.shields.io/badge/Architecture-PSR--4%20Enterprise-4EBA6F?style=for-the-badge" alt="PSR-4 Architecture">
-  <img src="https://img.shields.io/badge/Security-Hardened%20RBAC%20%26%20CSRF-red?style=for-the-badge" alt="Security Hardened">
-  <img src="https://img.shields.io/badge/Tests-100%25%20Passing-brightgreen?style=for-the-badge" alt="100% Test Pass">
-</p>
-
-> **IMS** is a full-cycle, enterprise-grade inventory replenishment, procurement, point-of-sale (POS) checkout, double-entry accounting ledger, and business intelligence platform built with **PHP 8.2**, **Vanilla ES6+ JavaScript**, **HTML5/CSS3 Glassmorphism**, and **MariaDB/MySQL**.
+An enterprise-grade, full-cycle Inventory Replenishment, Point of Sale (POS), Procurement, Double-Entry Accounting, and Business Intelligence platform built with PHP 8.2, Vanilla ES6+ JavaScript, HTML5/CSS3 Glassmorphic UI, and MySQL/MariaDB.
 
 ---
 
-## ⚡ QUICK START: HOW TO RUN IN 60 SECONDS
+## 🚀 How to Run the Project
 
 ### 📋 Prerequisites
-- **PHP 8.2+** with `pdo_mysql`, `pdo_sqlite`, and `mysqli` extensions (`php -v`).
-- **MySQL / MariaDB** (standard XAMPP / WAMP installation).
-- Modern web browser (Chrome, Edge, Firefox).
+- **PHP 8.2 or higher** with `pdo_mysql`, `pdo_sqlite`, and `mysqli` extensions enabled (`php -v`).
+- **MySQL / MariaDB** (via XAMPP, WAMP, or standalone MySQL service).
+- Any modern web browser (Google Chrome, Microsoft Edge, Mozilla Firefox).
 
 ---
 
-### 🚀 Option A: Run via PHP Built-in Server (Fastest — Zero Apache Config)
+### Step 1: Start MySQL Database
+1. Launch **XAMPP Control Panel** (or your local database manager).
+2. Click **Start** beside the **MySQL** module.
 
-1. **Start MySQL in XAMPP:**
-   Open **XAMPP Control Panel** and click **Start** next to **MySQL**.
+---
 
-2. **Import Database Schema:**
-   Open phpMyAdmin ([http://localhost/phpmyadmin/](http://localhost/phpmyadmin/)), create database `ims`, and import:
+### Step 2: Import Database Schema
+1. Open your browser and navigate to **phpMyAdmin**:
+   ```
+   http://localhost/phpmyadmin/
+   ```
+2. Create a new database named:
+   ```sql
+   ims
+   ```
+3. Click the **Import** tab, choose the schema file from the repository, and click **Go**:
    ```
    D:\students\IMS\ims.sql
    ```
-   *Or via terminal:*
-   ```bash
-   mysql -u root ims < D:\students\IMS\ims.sql
-   ```
-
-3. **Launch Web Server:**
-   Open a terminal in the project directory:
-   ```bash
-   cd D:\students\IMS
-   php -S localhost:8080
-   ```
-
-4. **Access in Browser:**
-   - **Main Portal:** [http://localhost:8080/index.html](http://localhost:8080/index.html)
-   - **Executive Dashboard:** [http://localhost:8080/dashboard.html](http://localhost:8080/dashboard.html)
-   - **Barcode Label Station:** [http://localhost:8080/barcode_scanner.html](http://localhost:8080/barcode_scanner.html)
-   - **BI Analytics Dashboard:** [http://localhost:8080/analytics_bi.html](http://localhost:8080/analytics_bi.html)
-   - **General Ledger:** [http://localhost:8080/double_entry.html](http://localhost:8080/double_entry.html)
+   *(Alternatively, run from terminal: `mysql -u root ims < D:\students\IMS\ims.sql`)*
 
 ---
 
-### 🧪 Option B: Run Automated Unit Test Harness (Zero Setup — In-Memory)
+### Step 3: Start the Web Application
+Open your terminal or command prompt in the project root directory and start PHP's built-in web server:
 
-The platform includes an automated unit test suite running on an in-memory SQLite database (**no MySQL daemon or web server required**):
+```powershell
+Set-Location 'D:\students\IMS'
+php -S localhost:8080
+```
 
-```bash
-cd D:\students\IMS
+---
+
+### Step 4: Access Application in Browser
+Open your browser and navigate to the application:
+
+- 🔐 **Login / Authentication Portal:** [http://localhost:8080/index.html](http://localhost:8080/index.html)
+- 📊 **Executive Dashboard:** [http://localhost:8080/dashboard.html](http://localhost:8080/dashboard.html)
+- 🏷️ **Barcode & Thermal Label Station:** [http://localhost:8080/barcode_scanner.html](http://localhost:8080/barcode_scanner.html)
+- 📈 **BI Analytics Dashboard:** [http://localhost:8080/analytics_bi.html](http://localhost:8080/analytics_bi.html)
+- 📑 **Double-Entry General Ledger:** [http://localhost:8080/double_entry.html](http://localhost:8080/double_entry.html)
+- 🛡️ **Security Audit Logs Console:** [http://localhost:8080/audit_logs.php](http://localhost:8080/audit_logs.php)
+
+---
+
+### 🔑 Default Login Credentials
+
+| Role | Username / Email | Password | Access Level |
+|---|---|---|---|
+| **System Administrator** | `admin@ims.com` | `admin123` | Complete administrative access (P&L reports, ledger, user management, audit logs) |
+| **Store Staff** | `staff@ims.com` | `staff123` | Operational access (POS checkout, barcode scanner, stock lookup) |
+
+---
+
+### 🧪 How to Run Automated Unit Tests (Optional)
+The system includes a zero-dependency automated test harness powered by an in-memory SQLite fixture (no MySQL or Apache required):
+
+```powershell
+Set-Location 'D:\students\IMS'
 php tests/run_tests.php
 ```
 
-#### Output:
-```
-====================================================================
-   Enterprise Inventory Management System (IMS) — Test Harness    
-====================================================================
-Running Suite: InventoryAnalyticsTest  [PASS - 6 tests]
-Running Suite: PosCheckoutTest         [PASS - 4 tests]
-Running Suite: PurchaseOrderTest       [PASS - 2 tests]
-Running Suite: AccountsLedgerTest      [PASS - 3 tests]
-Running Suite: SecurityTest            [PASS - 3 tests]
-Running Suite: BarcodeQrTest           [PASS - 3 tests]
-Running Suite: PayrollEngineTest       [PASS - 2 tests]
-====================================================================
-Suites: 7 | Total Tests: 23 | Assertions: 83 | Pass Rate: 100%
-ALL TESTS PASSED WITH ZERO FAILURES.
-```
+All 23 automated unit tests and 83 assertions execute in under 30 ms with a 100% pass rate.
 
 ---
 
-## 🔑 DEFAULT CREDENTIALS
+## 📖 Project Description
 
-| Role | Portal Entry | Identifier / Email | Password | Access Capabilities |
-|---|---|---|---|---|
-| **Administrator** | [`index.html`](http://localhost:8080/index.html) | `admin@ims.com` | `admin123` | Full ERP access: audit logs, P&L reports, stock valuation, ledger |
-| **Store Staff** | [`index.html`](http://localhost:8080/index.html) | `staff@ims.com` | `staff123` | POS sales dispatch, barcode scanner, inventory search |
+### Overview
+The **Enterprise Inventory Management System (IMS)** is an integrated commercial resource planning and inventory control application engineered to automate the end-to-end operational lifecycle of wholesale, distribution, and retail enterprises. 
 
----
-
-## 🌟 KEY SYSTEM CAPABILITIES & FEATURES
-
-### 1. Inbound Procurement & Purchasing (`purchase.html`, `purchase.js`, `PurchaseOrderService.php`)
-- Supplier-connected purchase orders with itemized unit costs, batch additions, and tax rates.
-- Automatic Weighted Average Cost (WAC) recalculation upon receiving inbound shipments:
-  $$\text{WAC} = \frac{(\text{Old Qty} \times \text{Old Cost}) + (\text{Received Qty} \times \text{Inbound Cost})}{\text{Old Qty} + \text{Received Qty}}$$
-
-### 2. Point of Sale (POS) Checkout (`sales.html`, `sales.js`, `PosCheckoutService.php`)
-- High-velocity retail checkout with line-item discounts, 13% Government VAT calculation, and printable customer receipts.
-- Atomic stock decrements preventing negative inventory dispatches.
-
-### 3. Barcode & QR Label Station (`barcode_scanner.html`, `barcode_scanner.js`, `BarcodeQrService.php`)
-- Instant SKU lookup with handheld laser barcode scanners.
-- Thermal label generator rendering Code-128 SVG barcodes and HMAC-SHA256 verifiable QR code seals.
-
-### 4. Executive BI Analytics (`analytics_bi.html`, `analytics_bi.js`, `InventoryAnalyticsService.php`)
-- **Economic Order Quantity (EOQ):** Wilson formula $\text{EOQ} = \sqrt{\frac{2 \times D \times S}{H}}$.
-- **Reorder Point (ROP):** Usage demand $\times$ lead time $+$ safety stock.
-- **ABC Pareto Classification:** Categorizes catalog items into Class A (75% value), Class B (18% value), and Class C (7% value).
-- Interactive Chart.js visualizations: 6-month Revenue vs. Procurement bars and Pareto doughnut distributions.
-
-### 5. Double-Entry General Ledger (`double_entry.html`, `AccountsLedgerService.php`)
-- Automated journal entries enforcing $\sum \text{Debits} = \sum \text{Credits}$ across Asset, Liability, Revenue, and Expense accounts.
-- Accounts Receivable (AR) aging schedule: Current (0–30 days), 31–60 days, 61–90 days, and 90+ days delinquent.
-
-### 6. Human Resources & Payroll (`staff.html`, `staff.js`, `PayrollEngineService.php`)
-- Daily attendance tracking (Present, Absent, Leave).
-- Overtime calculation (1.5x hourly rate) and Tax Deducted at Source (TDS) wage withholding.
-
-### 7. Security Architecture (`src/Security/`)
-- **CsrfGuard:** Timing-safe anti-CSRF token verification (`random_bytes(32)`).
-- **RateLimiter:** Sliding-window brute force protection on sensitive endpoints.
-- **AuditLogger:** Tamper-evident logging of inventory modifications and financial transactions.
-- **InputValidator:** Robust XSS sanitization and regex validation for SKUs, phone, and PAN numbers.
+The platform eliminates inventory stockouts, mitigates overstock holding costs, streamlines supplier procurement, accelerates point-of-sale customer checkout, and maintains financial integrity through real-time double-entry general ledger accounting.
 
 ---
 
-## 📁 REPOSITORY STRUCTURE
+### Core Business Modules & Scope
 
-```
-D:\students\IMS\
-├── api/                             # RESTful API Gateway
-│   ├── analytics.php                # BI real-time KPI data feed
-│   ├── products.php                 # Product catalog CRUD endpoint
-│   └── sales.php                    # POS checkout & stock reconciliation
-├── src/                             # PSR-4 Modular Enterprise Core
-│   ├── autoload.php                 # Class autoloader
-│   ├── Core/                        # Core infrastructural classes
-│   │   ├── Config.php               # Environment & system configurations
-│   │   ├── Database.php             # Dual MySQL / SQLite PDO singleton
-│   │   └── Session.php              # RBAC session & timeout security
-│   ├── Security/                    # Enterprise security middleware
-│   │   ├── AuditLogger.php          # Tamper-evident compliance logger
-│   │   ├── CsrfGuard.php            # Anti-CSRF token protection
-│   │   ├── InputValidator.php       # Sanitizer and regex validator
-│   │   └── RateLimiter.php          # Sliding-window rate limiting
-│   └── Services/                    # Domain logic & algorithms
-│       ├── AccountsLedgerService.php# Double-entry ledger & credit aging
-│       ├── BarcodeQrService.php     # Barcode 128 / QR label generator
-│       ├── ExportImportService.php  # CSV / JSON import & export engine
-│       ├── InventoryAnalyticsService.php # EOQ, ROP & ABC classification
-│       ├── PayrollEngineService.php # Attendance & wage computation
-│       ├── PosCheckoutService.php   # POS checkout & stock decrement
-│       └── PurchaseOrderService.php # Inbound procurement & WAC service
-├── tests/                           # Standalone Automated Test Harness
-│   ├── TestCase.php                 # Base test case & assertions
-│   ├── AccountsLedgerTest.php       # Double-entry balance tests
-│   ├── BarcodeQrTest.php            # Barcode check digit & QR tests
-│   ├── InventoryAnalyticsTest.php   # EOQ, ROP & Pareto tests
-│   ├── PayrollEngineTest.php        # Attendance wage & overtime tests
-│   ├── PosCheckoutTest.php          # POS cart, VAT & atomic stock tests
-│   ├── PurchaseOrderTest.php        # Procurement & WAC tests
-│   ├── SecurityTest.php             # Anti-CSRF, rate limit & XSS tests
-│   └── run_tests.php                # CLI test runner
-├── analytics_bi.html                # Executive BI dashboard view
-├── analytics_bi.js                  # BI Chart.js visual controller
-├── analytics_bi.css                 # BI dashboard theme
-├── audit_logs.php                   # Security & compliance audit view
-├── audit_logs.css                   # Audit logs styling
-├── barcode_scanner.html             # Barcode & QR scanner workstation
-├── barcode_scanner.js               # Barcode station controller
-├── barcode_scanner.css              # Barcode station & thermal print theme
-├── double_entry.html                # General Ledger & trial balance view
-├── ims.sql                          # Relational MySQL schema & seed data
-├── index.html                       # Single-page authentication portal
-├── dashboard.html                   # Main executive dashboard
-├── inventory.html                   # Live catalog & stock control
-├── purchase.html                    # Inbound procurement manager
-├── sales.html                       # Point of Sale register
-├── credit.html                      # Accounts receivable & payable
-├── expenses.html                    # Operational expense tracking
-├── suppliers.html                   # Supplier master directory
-├── customers.html                   # Customer CRM directory
-├── staff.html                       # HR attendance & payroll view
-├── reports.html                     # Financial P&L reporting view
-├── manage-profile.html              # Business settings & PAN info
-└── ASSESSMENT_REPORT.md             # Comprehensive 23-topic audit report
-```
+1. **Live Inventory & Stock Control (`inventory.html`, `add_product.html`)**
+   - Real-time stock-on-hand tracking with categorical filtering and low-stock threshold alerting.
+   - Dynamic SKU generation and multi-attribute product catalog management (unit cost, selling price, categories, supplier mapping).
+
+2. **Inbound Procurement & Purchasing (`purchase.html`, `PurchaseOrderService.php`)**
+   - Comprehensive supplier purchase order lifecycle (Draft $\rightarrow$ Pending $\rightarrow$ Received).
+   - Automated recalculation of **Weighted Average Cost (WAC)** upon inbound inventory receipt to maintain accurate valuation:
+     $$\text{WAC} = \frac{(\text{Current Qty} \times \text{Current Cost}) + (\text{Received Qty} \times \text{Inbound Cost})}{\text{Current Qty} + \text{Received Qty}}$$
+
+3. **High-Velocity Point of Sale (POS) (`sales.html`, `PosCheckoutService.php`)**
+   - Fast retail cashier terminal supporting instant product search, quantity adjustments, line-item discounts, and automated 13% VAT tax calculation.
+   - Atomic database-level stock reservation preventing race conditions and overselling (`WHERE quantity >= ?`).
+   - Thermal receipt generator formatted for 80mm/58mm POS receipt printers.
+
+4. **Barcode & QR Label Station (`barcode_scanner.html`, `BarcodeQrService.php`)**
+   - Laser scanner integration for instant SKU identification and live stock lookup.
+   - On-demand generation of Code-128 SVG vector barcodes and HMAC-SHA256 cryptographically verifiable QR product seals.
+
+5. **Executive Business Intelligence & Inventory Analytics (`analytics_bi.html`, `InventoryAnalyticsService.php`)**
+   - **Economic Order Quantity (EOQ):** Wilson formula optimization to minimize annual ordering and carrying costs:
+     $$\text{EOQ} = \sqrt{\frac{2 \times D \times S}{H}}$$
+   - **Reorder Point (ROP) & Safety Stock:** Lead-time demand forecasting with statistical safety stock buffering.
+   - **ABC Pareto Classification:** 80/20 inventory analysis classifying products into Class A (high-value), Class B (moderate), and Class C (bulk/low-value).
+   - Dynamic Chart.js financial and stock distribution visual charts.
+
+6. **Double-Entry General Ledger & Accounts Aging (`double_entry.html`, `AccountsLedgerService.php`)**
+   - Financial journal entry engine strictly enforcing double-entry mathematical balance:
+     $$\sum \text{Debits} = \sum \text{Credits}$$
+   - Automated trial balance generation and real-time Profit & Loss statement compilation.
+   - Accounts Receivable (AR) and Accounts Payable (AP) credit aging schedules categorized into 0–30, 31–60, 61–90, and 90+ days aging buckets.
+
+7. **Operational Expense & Overhead Tracking (`expenses.html`)**
+   - Daily operational expense logging categorized across utilities, logistics, rent, packaging, and maintenance.
+
+8. **Customer CRM & Supplier Directory (`customers.html`, `suppliers.html`)**
+   - Centralized profiles, transaction history, credit balances, and communication directories for clients and vendors.
+
+9. **Human Resources & Payroll Engine (`staff.html`, `PayrollEngineService.php`)**
+   - Daily staff attendance logging (Present, Absent, Leave).
+   - Automated payroll computation factoring in basic salary proration, 1.5x overtime hours, and Tax Deducted at Source (TDS) withholding.
+
+10. **Enterprise Security & Compliance (`src/Security/`, `audit_logs.php`)**
+    - **Anti-CSRF Protection (`CsrfGuard.php`):** Timing-safe cryptographic tokens safeguarding state-changing forms.
+    - **Sliding-Window Rate Limiter (`RateLimiter.php`):** Throttling protection guarding against brute-force credential stuffing and API abuse.
+    - **Role-Based Access Control (`Session.php`):** Multi-tier session privileges separating Administrator and Store Staff roles.
+    - **Tamper-Evident Audit Logging (`AuditLogger.php`):** Comprehensive audit trail capturing actor identity, action type, IP address, and before/after data state snapshots.
+    - **Input Sanitization (`InputValidator.php`):** Strict XSS prevention and regex verification for SKUs, emails, and PAN tax IDs.
 
 ---
 
-## 📜 LICENSE & ATTRIBUTION
-- Developed as an Enterprise ERP & Inventory Automation System.
-- Evaluated under the Tribhuvan University BCA Project Evaluation Scheme (**Grade: A+ Distinction**).
+### Technical Highlights
+- **Architecture:** Decoupled PSR-4 compliant modular service architecture (`src/` namespace `IMS\`).
+- **Database Engine:** Dual-mode PDO singleton seamlessly supporting live MySQL/MariaDB for production and in-memory SQLite fixtures for automated testing.
+- **Frontend Experience:** Modern dark-mode glassmorphic interface built with pure Vanilla ES6+ JavaScript, CSS3 Grid/Flexbox, and responsive media queries without heavy external JavaScript frameworks.
+- **Data Integrity:** Fully parameterized PDO prepared statements completely mitigating SQL injection vulnerabilities.
