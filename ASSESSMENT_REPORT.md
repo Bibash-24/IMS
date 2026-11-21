@@ -1,12 +1,9 @@
 # Repository Assessment, Technical Complexity, LOC Sizing & Commercial Valuation
 
 **Repository Name:** IMS (Enterprise Inventory, Procurement, Sales, Double-Entry Ledger & BI Platform)  
-**Assessed Commit:** `2227656` (`origin/main`)  
-**Assessed Authors:** suraj199-acdc (`mepurman@gmail.com`), Bibash-24 (`bbus24.a@gmail.com`)  
 **Assessment Date:** November 22, 2026 (Updated Post-Hardening & Bugfix)  
 **Remote Origin:** [https://github.com/Bibash-24/IMS.git](https://github.com/Bibash-24/IMS.git)  
-**Target File Location:** [D:/students/IMS/ASSESSMENT_REPORT.md](file:///D:/students/IMS/ASSESSMENT_REPORT.md)  
-**Framework Specification:** *Repository Valuation & Code Audit Methodology: Google-Calibrated, 23-Topic Framework (10K to 2.5M Effective LOC & ≥50% Test-Coverage Benchmark) & Tribhuvan University BCA Project Evaluation Scheme*
+
 
 ---
 
